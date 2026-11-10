@@ -1,0 +1,11 @@
+{
+    "name": "discord-bot-bloom",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev:bot": "pnpm --dir back-end/bot dev",
+        "dev:web": "pnpm --dir front-end dev",
+        "build": "pnpm -r --if-present build",
+        "typecheck": "pnpm -r --if-present typecheck"
+    }
+}

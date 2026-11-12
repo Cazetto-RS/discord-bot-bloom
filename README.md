@@ -89,6 +89,7 @@ Na raiz do repositório:
 
 ```bash
 pnpm install
+pnpm install --frozen-lockfile
 ```
 
 Para iniciar a aplicação do bot, depois de sua configuração:

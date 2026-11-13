@@ -1,11 +1,11 @@
 import {REST, Routes} from "discord.js";
 
 import {env} from "./config/env.js";
-import {data as pingCommand} from "./commands/ping.js";
+import {getAllCommands} from "./handlers/command.registry.js";
 
-const commands = [
-    pingCommand.toJSON(),
-];
+const commands = getAllCommands().map(
+    (command) => command.data.toJSON()
+);
 
 const rest = new REST({version: "10"}).setToken(
     env.DISCORD_TOKEN
@@ -13,7 +13,7 @@ const rest = new REST({version: "10"}).setToken(
 
 async function depolyCommands(): Promise<void> {
     try {
-        console.log("[Bloom] Registrando comandos...");
+        console.log(`[Bloom] Registrando ${commands.length} comandos...`);
 
         await rest.put(
             Routes.applicationGuildCommands(

@@ -1,13 +1,15 @@
-import {ChatInputCommandInteraction, SlashCommandBuilder} from "discord.js";
+import {SlashCommandBuilder} from "discord.js";
 
-export const data = new SlashCommandBuilder()
+import type { BloomCommand } from "../types/command.js";
+
+export const pingCommand = {
+    data: new SlashCommandBuilder()
     .setName("ping")
-    .setDescription("Verifique se o Bloom está funcionando");
+    .setDescription("Verificnado sem a Bloom está funcionando"),
 
-export async function execute(
-    interaction: ChatInputCommandInteraction
-): Promise<void> {
-    await interaction.reply({
-        content: "Pong! Bloom está online."
-    });
-}
+    async execute(interection) {
+        await interection.reply({
+            content: "Pong! Bloom está online."
+        });
+    },
+} satisfies BloomCommand;

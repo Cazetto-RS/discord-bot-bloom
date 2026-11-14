@@ -3,6 +3,7 @@ import {Client, GatewayIntentBits} from "discord.js";
 import {env} from "./config/env.js";
 import { registerReadyEvent } from "./events/ready.js";
 import { registerInteractionEvent } from "./events/interaction-create.js";
+import { registerGatewayEvents } from "./events/gateway.js";
 
 
 const client = new Client({
@@ -13,6 +14,7 @@ const client = new Client({
 
 registerReadyEvent(client);
 registerInteractionEvent(client);
+registerGatewayEvents(client);
 
 async function main(): Promise<void> {
     try {

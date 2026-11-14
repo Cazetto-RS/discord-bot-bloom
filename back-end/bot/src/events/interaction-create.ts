@@ -1,5 +1,7 @@
-import {Client, Events, MessageFlags} from "discord.js";
-import {getCommand} from "../handlers/command.registry.js";
+import { Client, Events, MessageFlags } from "discord.js";
+import { getCommand } from "../handlers/command.registry.js";
+import { Performance } from "node:perf_hooks";
+import { logger } from "../utils/logger.js";
 
 export function registerInteractionEvent(
     client: Client
@@ -25,9 +27,34 @@ export function registerInteractionEvent(
             return;
         }
 
+        const commandName = interaction.commandName;
+        const userId = interaction.user.id;
+        const username = interaction.user.username;
+        const guildId = interaction.guildId ?? "DM";
+
+        const startTime = performance.now();
+
+        logger.info(
+            `Comando /${commandName} recebido |` +
+            `Usuário: ${username} (${userId}) |` +
+            `Servidor: ${guildId}`
+        );
+
         try {
             await command.execute(interaction);
+
+            const duration = performance.now() - startTime;
+
+            logger.info(
+                `Comando /${commandName} executado em ${duration.toFixed(2)} ms`
+            )
         } catch (error) {
+            const duration = performance.now() - startTime;
+
+            logger.error(
+                `Falha no comando /${commandName} após ${duration.toFixed(2)} ms`
+            )
+
             console.error(
                 `[Bloom] Erro no comando ${interaction.commandName}:`,
                 error
